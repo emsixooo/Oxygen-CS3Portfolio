@@ -1,0 +1,42 @@
+# Create an object
+product1 = Product("Lucky Me Pancit Canton", 15, 20)
+product2 = Product("Pringles", "P50", 10)
+product3 = Product("Coca-Cola", "P25", 30)
+product4 = Product("Nissin Cup Noodles", "P20", 15)
+product5 = Product("Oreo", "P30", 25)
+
+
+# Call all of the products.
+product1.display_info()
+print("--" * 30)
+product2.display_info()
+print("--" * 30)
+product3.display_info()
+print("--" * 30)
+product4.display_info()
+print("--" * 30)
+product5.display_info()
+
+# Selling objects
+
+print(" --- Before selling --- ")
+product1.display_info()
+
+print("\nSell 3 items ... ")
+product1.sell(3)
+
+print("\n --- After selling --- ")
+product1.display_info()
+
+# Restocking items
+
+print(" --- Restocking 10 items --- ")
+product1.restock(10)
+print(" --- After restocking --- ")
+product1.display_info()
+
+product1.remove(5) # Remove 5 items
+product1.display_info()
+
+product1.remove(50) # Try to remove more than stock
+product1.display_info()
