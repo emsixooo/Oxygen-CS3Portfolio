@@ -54,6 +54,7 @@ print("2. Sell items")
 print("3. Restock items")
 print("4. Remove items")
 
+# does not work as intended yet, subject to change
 choice = int(input("Enter your choice (1-4): "))
 if choice == 1:
     product_name = input("Enter product name: ")
