@@ -1,0 +1,118 @@
+class Publication:
+    def __init__(self, title, author):
+        self.title = title
+        self.author = author
+        self.is_available = True  # tracks if item is on the shelf
+        self.borrower = None      # keeps track of who has it right now
+
+    def get_title(self):
+        return self.title
+
+    def get_author(self):
+        return self.author
+
+    def set_title(self, title):
+        self.title = title
+
+    def set_author(self, author):
+        self.author = author
+
+    # let someone borrow the item if it's free
+    def check_out(self, borrower_name):
+        if self.is_available:
+            self.is_available = False
+            self.borrower = borrower_name
+            print(f"Success: '{self.title}' has been checked out by {borrower_name}.")
+        else:
+            print(f"Denied: '{self.title}' is already borrowed by {self.borrower}.")
+
+    # return the item back to the library
+    def return_item(self):
+        if not self.is_available:
+            print(f"Success: '{self.title}' has been returned by {self.borrower}.")
+            self.is_available = True
+            self.borrower = None
+        else:
+            print(f"Notice: '{self.title}' was already in the library.")
+
+    def display_info(self):
+        print(f"Title: {self.title}")
+        print(f"Author: {self.author}")
+        # show if available or who's currently borrowing it
+        status = "Available" if self.is_available else f"Checked out by {self.borrower}"
+        print(f"Status: {status}")
+
+
+class Book(Publication):
+    def __init__(self, title, author, number_of_pages):
+        super().__init__(title, author)
+        self._number_of_pages = 0
+        self.set_number_of_pages(number_of_pages)
+
+    def get_number_of_pages(self):
+        return self._number_of_pages
+
+    def set_number_of_pages(self, value):
+        if value <= 0:
+            print("The number of pages must be positive")
+        else:
+            self._number_of_pages = value
+
+    def display_info(self):
+        super().display_info()  # grab title and author from parent class
+        print(f"Number of pages: {self._number_of_pages}")
+
+
+class Magazine(Publication):
+    def __init__(self, title, author, issue_number):
+        super().__init__(title, author)
+        self._issue_number = 0
+        self.set_issue_number(issue_number)
+
+    def get_issue_number(self):
+        return self._issue_number
+
+    def set_issue_number(self, value):
+        if value <= 0:
+            print("The issue number must be positive")
+        else:
+            self._issue_number = value
+
+    def display_info(self):
+        super().display_info()  # grab title and author from parent class
+        print(f"Issue number: {self._issue_number}")
+
+
+# set up test objects
+pub1 = Publication("Journal of Experimental Psychology", "Ratchiff, R. & Van Dongen, H.")
+book1 = Book("The Hobbit", "J.R.R. Tolkien", 310)
+mag1 = Magazine("National Geographic", "Various Authors", 202)
+
+# print out info and test everything
+print("Publication Information:")
+pub1.display_info()
+
+print("\nBook Information:")
+book1.set_number_of_pages(-310)
+book1.display_info()
+print(book1.get_number_of_pages())
+
+# test out the new book / magazine borrowing system (extra feature)
+print("\nBook Borrowing System:")
+book1.check_out("Yiheng Wang")  # first borrower takes the book
+book1.display_info()            # show the updated status after checkout
+
+book1.check_out("Leo Borromeo")     # try to borrow while it is already checked out
+book1.return_item()             # return the book to the library
+book1.display_info()            # show the item is available again
+
+print("\nMagazine Information:")
+mag1.display_info()
+print(mag1.get_issue_number())
+
+# testing magazine borrowing too
+print("\nMagazine Borrowing System:")
+mag1.check_out("Xuanyi Geng")  # borrow the magazine
+mag1.display_info()            # show current borrower
+mag1.return_item()             # return it to library
+mag1.display_info()            # confirm it is available again
